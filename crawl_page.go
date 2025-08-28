@@ -7,12 +7,18 @@ import (
 )
 
 func (cfg *config) crawlPage(rawCurrentURL string) {
-	fmt.Println(rawCurrentURL)
 	cfg.concurrencyControl <- struct{}{}
 	defer func() {
 		<-cfg.concurrencyControl
 		cfg.wg.Done()
 	}()
+
+	cfg.mu.Lock()
+	if len(cfg.pages) >= cfg.maxPages {
+		cfg.mu.Unlock()
+		return
+	}
+	cfg.mu.Unlock()
 
 	currentURL, err := url.Parse(rawCurrentURL)
 	if err != nil {
