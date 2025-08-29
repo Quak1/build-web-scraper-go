@@ -56,5 +56,5 @@ func main() {
 	cfg.crawlPage(rawBaseUrl)
 	cfg.wg.Wait()
 
-	fmt.Println(cfg.pages)
+	printReport(cfg.pages, rawBaseUrl)
 }

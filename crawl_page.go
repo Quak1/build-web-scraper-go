@@ -35,7 +35,6 @@ func (cfg *config) crawlPage(rawCurrentURL string) {
 	}
 
 	if isFirst := cfg.addPageVisit(normalizedURL); !isFirst {
-		fmt.Println("================================================================")
 		return
 	}
 
